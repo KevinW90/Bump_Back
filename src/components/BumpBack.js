@@ -14,6 +14,7 @@ class BumpBack extends Component {
         super(props);
 
         this.state = {
+            // game_over: false,
             die1: 0,
             die2: 0,
             active_player: 0,
@@ -79,6 +80,11 @@ class BumpBack extends Component {
                 //move to space 1
                 this.player_list[this.state.active_player].pos = 1;
                 moved = true;
+            } else if (_die1 === 6 && _die2 === 6) { //win from start by rolling 12
+                this.player_list[this.state.active_player].pos = total;
+                // this.setState({
+                //     game_over: true
+                // })
             }
         } else {
             //next and previous spaces
