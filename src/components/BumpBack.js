@@ -55,6 +55,7 @@ class BumpBack extends Component {
         let total = _die1 + _die2;
         //player info
         let pos = this.player_list[this.state.active_player].pos;
+        let active_player = this.player_list[this.state.active_player];
         //tracks if the player moved
         let moved = false;
 
@@ -114,6 +115,19 @@ class BumpBack extends Component {
             else if (_die1 === next || _die2 === next || total === next) { //if next is rolled, go to that space
                 this.player_list[this.state.active_player].pos = next;
                 moved = true;
+            }
+        }
+
+        //check if player's new position is occupied
+        if (moved) { //if the player moved
+            for (let i = 0; i < this.player_list.length; i++) { //for all players
+                let other_player = this.player_list[i];
+                if (i !== this.state.active_player) { //don't check a player against itself
+                    if (active_player.pos === other_player.pos &&
+                        pos !== 1) { //active player's position equals another player's position, but not on first space
+                        this.player_list[i].pos -= 1; //move other player back 1 space
+                    }
+                }
             }
         }
 
