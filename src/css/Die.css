@@ -51,4 +51,6 @@
     display: grid;
     /* gap: 0px; */
     grid-template: 1fr / 1fr 1fr;
+
+    /* border: 1px solid yellow; */
 }

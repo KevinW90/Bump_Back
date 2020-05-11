@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import '../css/BumpBack.css';
-import '../css/GameMenu.css';
 import '../css/Strip.css';
 import '../css/Block.css';
 
@@ -88,15 +87,19 @@ class BumpBack extends Component {
                 //snake eyes moves 3
                 if (total === 2) {
                     //if new pos is higher than 12, no  move
-                    if (this.player_list[this.state.active_player].pos += 3 <= 12) {
+                    if (pos + 3 <= 12) {
                         this.player_list[this.state.active_player].pos += 3;
                         moved = true;
                     }
                 }
                 else if (pos > 7) { //after square 7, doubles moves 2 spaces
-                    if (this.player_list[this.state.active_player].pos += 2 <= 12) {
+                    if (pos + 2 <= 12) { //if moving 2 does not put you past the board
                         this.player_list[this.state.active_player].pos += 2;
                         moved = true;
+                    } else if (total === next) { //if your double is the next step, move to that step
+                        //included because of bug in rules that prevents winning on space 11
+                        //you need a 12, which is a double, and space is over 7; from above, nothing happens
+                        this.player_list[this.state.active_player].pos += 1;
                     }
                 }
                 else if (_die1 > pos) { //if the total is ahead of player
@@ -147,15 +150,16 @@ class BumpBack extends Component {
         
         return (
             <div id="bump-back">
-                <div className="game-menu">
+                <div className="playback">
                     {this.who_rolled !== '' ? <div className="who-rolled">{this.state.who_rolled}</div> : <div></div>}
-                    
                     <div className="dice">
                         <Die dotCnt={this.state.die1} />
                         <Die dotCnt={this.state.die2} />
                     </div>
+                </div>
+                
+                <div className="game-menu">
                     <div className="active-player">turn: {this.player_list[this.state.active_player].name}</div>
-                    
                     <Button role="roll" clickHandler={this.DiceRoll}/>
                 </div>
                 <div className="strip">

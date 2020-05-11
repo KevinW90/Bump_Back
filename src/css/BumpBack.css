@@ -1,4 +1,5 @@
 #bump-back {
+    perspective: 1000px;
     width: 100vw;
     height: 100vh;
 
@@ -9,4 +10,47 @@
     padding: 20px 0;
 
     /* border: 1px solid green; */
+}
+
+.playback {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    display: grid;
+    /* gap: 10px; */
+    grid-template: 1fr 1fr / 1fr;
+
+    font-variant: small-caps;
+}
+
+.who-rolled {
+    column-span: 2;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid yellow; */
+}
+
+.game-menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    display: grid;
+    gap: 10px;
+    grid-template: repeat(2, 1fr) / 1fr;
+
+    font-size: 1.3rem;
+    font-variant: small-caps;
+    
+    /* border: 1px solid yellow; */
+}
+
+.active-player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
