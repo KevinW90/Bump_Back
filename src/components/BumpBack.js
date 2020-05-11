@@ -37,12 +37,14 @@ class BumpBack extends Component {
         {
             name: "kevin",
             pos: "start",
-            color: "orange"
+            color: "orange",
+            turn: 0
         },
         {
             name: "bob",
             pos: "start",
-            color: "green"
+            color: "green",
+            turn: 0
         }
     ]
 
@@ -50,17 +52,38 @@ class BumpBack extends Component {
         //get dice roll
         let _die1 = this.RNG(1,6);
         let _die2 = this.RNG(1,6);
-        //set player pos from dice roll
-        this.player_list[this.state.active_player].pos = _die1 + _die2;
+        //player info
+        let {name, pos, color, turn} = this.player_list[this.state.active_player];
+        //tracks if the player moved
+        let moved = false;
+
+        //active player's turn increases
+        turn++;
+
+        //if at start position
+        if (pos == "start") {
+            //if snake eyes
+            if (_die1 == 1 && _die2 == 1) {
+                //move to space 3
+                this.player_list[this.state.active_player].pos = 3;
+                moved = true;
+            } else if (_die1 == 1 || _die2 == 1) { //either die is 1
+                //move to space 1
+                this.player_list[this.state.active_player].pos = 1;
+                moved = true;
+            }
+        }
+
         //get the next player
-        let newActivePlayer = (this.state.active_player + 1) % this.player_list.length;
+        //if the player moved, they go again; if not, next player's turn
+        let newActivePlayer = (moved) ? this.state.active_player : (this.state.active_player + 1) % this.player_list.length;
 
         this.setState({
             //set dice roll
             die1: _die1,
             die2: _die2,
             //set new active player
-            active_player: newActivePlayer,
+            active_player: newActivePlayer
         })
     }
 
