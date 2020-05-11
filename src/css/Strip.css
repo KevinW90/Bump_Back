@@ -1,0 +1,10 @@
+.strip {
+    width: 200px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column-reverse;
+
+    border: 1px solid white;
+    border-radius: 15px;
+}

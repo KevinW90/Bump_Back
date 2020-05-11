@@ -1,0 +1,16 @@
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-grow: 1;
+}
+
+.block:not(:first-child) {
+    border-bottom: 1px solid white;
+}
+
+.start {
+    font-variant: small-caps;
+    flex-grow: 2;
+}
