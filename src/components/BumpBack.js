@@ -52,14 +52,16 @@ class BumpBack extends Component {
         //get dice roll
         let _die1 = this.RNG(1,6);
         let _die2 = this.RNG(1,6);
+        let total = _die1 + _die2;
         //player info
-        let {name, pos, color, turn} = this.player_list[this.state.active_player];
+        let {name, pos, __, turn} = this.player_list[this.state.active_player];
         //tracks if the player moved
         let moved = false;
 
         //active player's turn increases
-        turn++;
+        turn+=1;
 
+        console.log(`player: ${name}; pos: ${pos}; die1: ${_die1}; die2: ${_die2}`)
         //if at start position
         if (pos == "start") {
             //if snake eyes
@@ -70,6 +72,20 @@ class BumpBack extends Component {
             } else if (_die1 == 1 || _die2 == 1) { //either die is 1
                 //move to space 1
                 this.player_list[this.state.active_player].pos = 1;
+                moved = true;
+            }
+        } else {
+            //next and previous spaces
+            let next = pos + 1;
+            let prev = pos - 1;
+            console.log(`next: ${next}; prev: ${prev}`);
+
+            //rolling next or previous space on either or both die goes to that space
+            if (_die1 == prev || _die2 == prev || total == prev) { //if prev is rolled, must go back to that space
+                this.player_list[this.state.active_player].pos = prev;
+                moved = true;
+            } else if (_die1 == next || _die2 == next || total == next) { //if next is rolled, go to that space
+                this.player_list[this.state.active_player].pos = next;
                 moved = true;
             }
         }
