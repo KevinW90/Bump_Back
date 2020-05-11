@@ -1,4 +1,6 @@
 .block {
+    position: relative;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,4 +15,15 @@
 .start {
     font-variant: small-caps;
     flex-grow: 2;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
 }

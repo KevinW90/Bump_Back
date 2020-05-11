@@ -8,6 +8,7 @@
     background: white;
 
     justify-self: center;
+    align-self: center;
 
     box-shadow: inset 0 0 10px black;
 }
@@ -42,4 +43,12 @@
 
 .dot:nth-child(odd):last-child {
     grid-area: g;
+}
+
+
+.dice {
+    /* border: 1px solid blue; */
+    display: grid;
+    /* gap: 0px; */
+    grid-template: 1fr / 1fr 1fr;
 }
