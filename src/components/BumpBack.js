@@ -17,7 +17,7 @@ class BumpBack extends Component {
             die1: 0,
             die2: 0,
             active_player: 0,
-            who_rolled: ''
+            who_rolled: null
         }
 
         
@@ -31,6 +31,7 @@ class BumpBack extends Component {
         }
 
         this.DiceRoll = this.DiceRoll.bind(this);
+        this.Bump = this.Bump.bind(this);
     }
 
     player_list = [
@@ -45,6 +46,12 @@ class BumpBack extends Component {
             pos: "start",
             color: "green",
             turn: 0
+        },
+        {
+            name: "stuart",
+            pos: "start",
+            color: "blue",
+            turn: 0
         }
     ]
 
@@ -55,7 +62,6 @@ class BumpBack extends Component {
         let total = _die1 + _die2;
         //player info
         let pos = this.player_list[this.state.active_player].pos;
-        let active_player = this.player_list[this.state.active_player];
         //tracks if the player moved
         let moved = false;
 
@@ -78,15 +84,16 @@ class BumpBack extends Component {
             //next and previous spaces
             let next = pos + 1;
             let prev = pos - 1;
-            console.log(`next: ${next}; prev: ${prev}`);
 
             //rolling rules in order of importance
             if (_die1 === prev || _die2 === prev || total === prev) { //if prev is rolled, must go back to that space
                 this.player_list[this.state.active_player].pos = prev;
                 moved = true;
             } else if (_die1 === _die2) { //if doubles
+                console.log('doubles')
                 //snake eyes moves 3
                 if (total === 2) {
+                    console.log('snake eyes')
                     //if new pos is higher than 12, no  move
                     if (pos + 3 <= 12) {
                         this.player_list[this.state.active_player].pos += 3;
@@ -101,9 +108,11 @@ class BumpBack extends Component {
                         //included because of bug in rules that prevents winning on space 11
                         //you need a 12, which is a double, and space is over 7; from above, nothing happens
                         this.player_list[this.state.active_player].pos += 1;
+                        moved = true;
                     }
                 }
                 else if (_die1 > pos) { //if the total is ahead of player
+                    console.log('move to die1')
                     //move to that spot
                     this.player_list[this.state.active_player].pos = _die1;
                     moved = true;
@@ -118,17 +127,9 @@ class BumpBack extends Component {
             }
         }
 
-        //check if player's new position is occupied
+        //bump back feature
         if (moved) { //if the player moved
-            for (let i = 0; i < this.player_list.length; i++) { //for all players
-                let other_player = this.player_list[i];
-                if (i !== this.state.active_player) { //don't check a player against itself
-                    if (active_player.pos === other_player.pos &&
-                        pos !== 1) { //active player's position equals another player's position, but not on first space
-                        this.player_list[i].pos -= 1; //move other player back 1 space
-                    }
-                }
-            }
+            this.Bump(this.player_list[this.state.active_player]);
         }
 
         //get the next player
@@ -141,8 +142,23 @@ class BumpBack extends Component {
             die2: _die2,
             //set new active player
             active_player: newActivePlayer,
-            who_rolled: this.player_list[this.state.active_player].name
+            who_rolled: this.state.active_player
         })
+
+        console.log(this.player_list);
+    }
+
+    Bump = (player) => {
+        for (let i = 0; i < this.player_list.length; i++) { //for all players
+            let other_player = this.player_list[i];
+            if (player !== other_player) { //don't check a player against itself
+                if (player.pos === other_player.pos &&
+                    other_player.pos !== 1) { //active player's position equals another player's position, but not on first space
+                    this.player_list[i].pos -= 1; //move other player back 1 space
+                    this.Bump(this.player_list[i]) //check the bumped player's position for another bump
+                }
+            }
+        }
     }
 
     render() {
@@ -165,7 +181,12 @@ class BumpBack extends Component {
         return (
             <div id="bump-back">
                 <div className="playback">
-                    {this.who_rolled !== '' ? <div className="who-rolled">{this.state.who_rolled}</div> : <div></div>}
+                    {this.state.who_rolled !== null ? <div className="who-rolled"
+                                                           style={{color: this.player_list[this.state.who_rolled].color}}>
+                                                         {this.player_list[this.state.who_rolled].name}
+                                                      </div> 
+                                                    : 
+                                                      <div></div>}
                     <div className="dice">
                         <Die dotCnt={this.state.die1} />
                         <Die dotCnt={this.state.die2} />
@@ -173,8 +194,11 @@ class BumpBack extends Component {
                 </div>
                 
                 <div className="game-menu">
-                    <div className="active-player">turn: {this.player_list[this.state.active_player].name}</div>
-                    <Button role="roll" clickHandler={this.DiceRoll}/>
+                    <div className="active-player">turn: &nbsp; <span style={{color: this.player_list[this.state.active_player].color}}>
+                                                             {this.player_list[this.state.active_player].name}
+                                                         </span>
+                    </div>
+                    <Button role="roll" clickHandler={this.DiceRoll} bg={this.player_list[this.state.active_player].color}/>
                 </div>
                 <div className="strip">
                     {p.map( (players, n) => {
@@ -187,7 +211,6 @@ class BumpBack extends Component {
                                             for (let i = 0; i < this.player_list.length; i++) {
                                                 if (this.player_list[i].name === name) {
                                                     bg = this.player_list[i].color;
-                                                    break;
                                                 }
                                             }
                                             return (<Player bg={bg}/>)

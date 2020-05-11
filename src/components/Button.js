@@ -4,7 +4,7 @@ import '../css/Button.css';
 
 const Button = (props) => {
     return (
-        <div className="btn" id="roll" onClick={props.clickHandler}>
+        <div className="btn" id="roll" onClick={props.clickHandler} style={{background: props.bg}}>
             roll
         </div>
     );
