@@ -18,6 +18,7 @@ class BumpBack extends Component {
             die1: 0,
             die2: 0,
             active_player: 0,
+            who_rolled: ''
         }
 
         
@@ -98,9 +99,9 @@ class BumpBack extends Component {
                         moved = true;
                     }
                 }
-                else if (total > pos) { //if the total is ahead of player
+                else if (_die1 > pos) { //if the total is ahead of player
                     //move to that spot
-                    this.player_list[this.state.active_player].pos = total;
+                    this.player_list[this.state.active_player].pos = _die1;
                     moved = true;
                 } else { //total is current or behind, move 2 spaces
                     this.player_list[this.state.active_player].pos += 2;
@@ -122,7 +123,8 @@ class BumpBack extends Component {
             die1: _die1,
             die2: _die2,
             //set new active player
-            active_player: newActivePlayer
+            active_player: newActivePlayer,
+            who_rolled: this.player_list[this.state.active_player].name
         })
     }
 
@@ -146,11 +148,14 @@ class BumpBack extends Component {
         return (
             <div id="bump-back">
                 <div className="game-menu">
-                    <div className="active-player">Turn: {this.player_list[this.state.active_player].name}</div>
+                    {this.who_rolled !== '' ? <div className="who-rolled">{this.state.who_rolled}</div> : <div></div>}
+                    
                     <div className="dice">
                         <Die dotCnt={this.state.die1} />
                         <Die dotCnt={this.state.die2} />
                     </div>
+                    <div className="active-player">turn: {this.player_list[this.state.active_player].name}</div>
+                    
                     <Button role="roll" clickHandler={this.DiceRoll}/>
                 </div>
                 <div className="strip">
