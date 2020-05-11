@@ -54,22 +54,21 @@ class BumpBack extends Component {
         let _die2 = this.RNG(1,6);
         let total = _die1 + _die2;
         //player info
-        let {name, pos, __, turn} = this.player_list[this.state.active_player];
+        let pos = this.player_list[this.state.active_player].pos;
         //tracks if the player moved
         let moved = false;
 
         //active player's turn increases
-        turn+=1;
+        // turn+=1;
 
-        console.log(`player: ${name}; pos: ${pos}; die1: ${_die1}; die2: ${_die2}`)
         //if at start position
-        if (pos == "start") {
+        if (pos === "start") {
             //if snake eyes
-            if (_die1 == 1 && _die2 == 1) {
+            if (_die1 === 1 && _die2 === 1) {
                 //move to space 3
                 this.player_list[this.state.active_player].pos = 3;
                 moved = true;
-            } else if (_die1 == 1 || _die2 == 1) { //either die is 1
+            } else if (_die1 === 1 || _die2 === 1) { //either die is 1
                 //move to space 1
                 this.player_list[this.state.active_player].pos = 1;
                 moved = true;
@@ -80,11 +79,35 @@ class BumpBack extends Component {
             let prev = pos - 1;
             console.log(`next: ${next}; prev: ${prev}`);
 
-            //rolling next or previous space on either or both die goes to that space
-            if (_die1 == prev || _die2 == prev || total == prev) { //if prev is rolled, must go back to that space
+            //rolling rules in order of importance
+            if (_die1 === prev || _die2 === prev || total === prev) { //if prev is rolled, must go back to that space
                 this.player_list[this.state.active_player].pos = prev;
                 moved = true;
-            } else if (_die1 == next || _die2 == next || total == next) { //if next is rolled, go to that space
+            } else if (_die1 === _die2) { //if doubles
+                //snake eyes moves 3
+                if (total === 2) {
+                    //if new pos is higher than 12, no  move
+                    if (this.player_list[this.state.active_player].pos += 3 <= 12) {
+                        this.player_list[this.state.active_player].pos += 3;
+                        moved = true;
+                    }
+                }
+                else if (pos > 7) { //after square 7, doubles moves 2 spaces
+                    if (this.player_list[this.state.active_player].pos += 2 <= 12) {
+                        this.player_list[this.state.active_player].pos += 2;
+                        moved = true;
+                    }
+                }
+                else if (total > pos) { //if the total is ahead of player
+                    //move to that spot
+                    this.player_list[this.state.active_player].pos = total;
+                    moved = true;
+                } else { //total is current or behind, move 2 spaces
+                    this.player_list[this.state.active_player].pos += 2;
+                    moved = true;
+                }
+            }
+            else if (_die1 === next || _die2 === next || total === next) { //if next is rolled, go to that space
                 this.player_list[this.state.active_player].pos = next;
                 moved = true;
             }
