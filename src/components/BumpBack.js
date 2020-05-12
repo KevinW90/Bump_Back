@@ -23,40 +23,39 @@ class BumpBack extends Component {
             difficulty: 'E'
         }
 
-        
-
         this.x = 'start 1 2 3 4 5 6 7 8 9 10 11 12';
         this.blocks = this.x.split(' ');
 
-        //random number generator [min, max]
-        this.RNG = (min,max) => {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
+        this.RNG = this.RNG.bind(this);
         this.DiceRoll = this.DiceRoll.bind(this);
         this.Bump = this.Bump.bind(this);
         this.changeDifficulty = this.changeDifficulty.bind(this);
+        this.RandomStartPlayer = this.RandomStartPlayer.bind(this);
     }
 
     player_list = [
             {
-                name: "p1",
+                name: "red",
                 pos: "start",
                 color: "red"
             },
             {
-                name: 'p2',
+                name: 'blue',
                 pos: 'start',
                 color: 'blue'
             }
     ];
 
+    RNG = (min,max) => {
+        let n = Math.floor(Math.random() * (max - min + 1)) + min;
+        console.log(n);
+        return n;
+    }
+
     DiceRoll = () => {
         //get dice roll
-        // let _die1 = this.RNG(1,6);
-        // let _die2 = this.RNG(1,6);
-        let _die1 = 6;
-        let _die2 = 6;
+        let _die1 = this.RNG(1,6);
+        let _die2 = this.RNG(1,6);
         let total = _die1 + _die2;
         //player info
         let pos = this.player_list[this.state.active_player].pos;
@@ -170,8 +169,8 @@ class BumpBack extends Component {
         this.setState({
             die1: 0,
             die2: 0,
-            active_player: 0,
             who_rolled: null,
+            active_player: 0,
             difficulty: diff
         })
 
@@ -179,12 +178,12 @@ class BumpBack extends Component {
             case 'E':
                 this.player_list = [
                     {
-                        name: "p1",
+                        name: "red",
                         pos: "start",
                         color: "red"
                     },
                     {
-                        name: 'p2',
+                        name: 'blue',
                         pos: 'start',
                         color: 'blue'
                     }
@@ -193,17 +192,17 @@ class BumpBack extends Component {
             case 'M':
                 this.player_list = [
                     {
-                        name: "p1",
+                        name: "red",
                         pos: "start",
                         color: "red"
                     },
                     {
-                        name: 'p2',
+                        name: 'blue',
                         pos: 'start',
                         color: 'blue'
                     },
                     {
-                        name: 'p3',
+                        name: 'green',
                         pos: 'start',
                         color: 'green'
                     }
@@ -212,27 +211,40 @@ class BumpBack extends Component {
             case 'H':
                 this.player_list = [
                     {
-                        name: "p1",
+                        name: "red",
                         pos: "start",
                         color: "red"
                     },
                     {
-                        name: 'p2',
+                        name: 'blue',
                         pos: 'start',
                         color: 'blue'
                     },
                     {
-                        name: 'p3',
+                        name: 'green',
                         pos: 'start',
                         color: 'green'
                     },
                     {
-                        name: 'p4',
+                        name: 'yellow',
                         pos: 'start',
-                        color: 'yellow'
+                        color: '#cccc00'
                     }
                 ]
         }
+
+        this.RandomStartPlayer();
+    }
+
+    RandomStartPlayer = () => {
+        for (let i = this.player_list.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.player_list[i], this.player_list[j]] = [this.player_list[j], this.player_list[i]];
+        }
+    }
+
+    componentWillMount = () => {
+        this.RandomStartPlayer();
     }
 
     render() {
