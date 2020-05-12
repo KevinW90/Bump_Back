@@ -36,7 +36,6 @@ class BumpBack extends Component {
         this.DiceRoll = this.DiceRoll.bind(this);
         this.Bump = this.Bump.bind(this);
         this.changeDifficulty = this.changeDifficulty.bind(this);
-        this.setPlayers = this.setPlayers.bind(this);
     }
 
     player_list = [
@@ -54,8 +53,10 @@ class BumpBack extends Component {
 
     DiceRoll = () => {
         //get dice roll
-        let _die1 = this.RNG(1,6);
-        let _die2 = this.RNG(1,6);
+        // let _die1 = this.RNG(1,6);
+        // let _die2 = this.RNG(1,6);
+        let _die1 = 6;
+        let _die2 = 6;
         let total = _die1 + _die2;
         //player info
         let pos = this.player_list[this.state.active_player].pos;
@@ -67,6 +68,7 @@ class BumpBack extends Component {
 
         //if at start position
         if (pos === "start") {
+            console.log(`${this.player_list[this.state.active_player].name}: ${pos}`)
             //if snake eyes
             if (_die1 === 1 && _die2 === 1) {
                 //move to space 3
@@ -77,7 +79,10 @@ class BumpBack extends Component {
                 this.player_list[this.state.active_player].pos = 1;
                 moved = true;
             } else if (_die1 === 6 && _die2 === 6) { //win from start by rolling 12
+                console.log(_die1 + ' ' + _die2)
                 this.player_list[this.state.active_player].pos = total;
+                console.log(this.player_list);
+                moved = true;
                 // this.setState({
                 //     game_over: true
                 // })
@@ -162,14 +167,15 @@ class BumpBack extends Component {
     }
 
     changeDifficulty = (diff) => {
-        console.log(`from difficulty button: ${diff}`);
         this.setState({
+            die1: 0,
+            die2: 0,
+            active_player: 0,
+            who_rolled: null,
             difficulty: diff
         })
-    }
 
-    setPlayers = () => {
-        switch (this.state.difficulty) {
+        switch (diff) {
             case 'E':
                 this.player_list = [
                     {
@@ -230,8 +236,6 @@ class BumpBack extends Component {
     }
 
     render() {
-        this.setPlayers();
-
         let p = [];
         for (let i = 0; i < this.blocks.length; i++) {
             p[i] = [];
