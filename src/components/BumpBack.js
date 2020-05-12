@@ -269,6 +269,17 @@ class BumpBack extends Component {
                     </div>
 
                     <Difficulty changeDifficulty={this.changeDifficulty}/>
+
+                    <div className="order">
+                        <div className="heading">
+                            order
+                        </div>
+                        <div className="po-wrapper">
+                            {this.player_list.map( (p) => {
+                                return(<div className="po" style={{background: p.color}}></div>)
+                            })}
+                        </div>
+                    </div>
                 </div>
                 
                 <div className="game-menu">
