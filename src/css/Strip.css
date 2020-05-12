@@ -1,5 +1,5 @@
 .strip {
-    width: 200px;
+    width: 70%;
     height: 100%;
 
     display: flex;
@@ -8,5 +8,5 @@
     border: 1px solid white;
     border-radius: 15px;
 
-    transform: rotateX(60deg);
+    transform: rotateX(50deg);
 }
