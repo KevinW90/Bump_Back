@@ -17,11 +17,14 @@
     display: grid;
     gap: 5px;
     grid-template: 1fr / repeat(3, 1fr);
+
+    border-radius: 10px;
+    background: #333333;
 }
 
 .setting {
     padding: 5px;
-    color: black;
+    color: white;
 
     display: flex;
     justify-content: center;
