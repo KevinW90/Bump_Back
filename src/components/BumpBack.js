@@ -36,7 +36,7 @@ class BumpBack extends Component {
         this.DiceRoll = this.DiceRoll.bind(this);
         this.Bump = this.Bump.bind(this);
         this.changeDifficulty = this.changeDifficulty.bind(this);
-        this.addPlayers = this.addPlayers.bind(this);
+        this.setPlayers = this.setPlayers.bind(this);
     }
 
     player_list = [
@@ -162,33 +162,15 @@ class BumpBack extends Component {
     }
 
     changeDifficulty = (diff) => {
-        switch (diff) {
-            case 'e': //easy
-                //one computer player
-                this.addPlayers(1); 
-                this.setState({
-                    difficulty: 'E'
-                })
-                break;
-            case 'm': //medium
-                //two computer players
-                this.addPlayers(2);
-                this.setState({
-                    difficulty: 'M'
-                }) 
-                break;
-            case 'h': //hard
-                //three computer players
-                this.addPlayers(3);
-                this.setState({
-                    difficulty: 'H'
-                })
-        }
+        console.log(`from difficulty button: ${diff}`);
+        this.setState({
+            difficulty: diff
+        })
     }
 
-    addPlayers = (num) => {
-        switch (num) {
-            case 1:
+    setPlayers = () => {
+        switch (this.state.difficulty) {
+            case 'E':
                 this.player_list = [
                     {
                         name: "p1",
@@ -202,7 +184,7 @@ class BumpBack extends Component {
                     }
                 ]
                 break;
-            case 2:
+            case 'M':
                 this.player_list = [
                     {
                         name: "p1",
@@ -221,7 +203,7 @@ class BumpBack extends Component {
                     }
                 ]
                 break;
-            case 3:
+            case 'H':
                 this.player_list = [
                     {
                         name: "p1",
@@ -248,6 +230,8 @@ class BumpBack extends Component {
     }
 
     render() {
+        this.setPlayers();
+
         let p = [];
         for (let i = 0; i < this.blocks.length; i++) {
             p[i] = [];
@@ -263,7 +247,7 @@ class BumpBack extends Component {
             }
         }
         //p is the current player positions
-        
+
         return (
             <div id="bump-back">
                 <div className="game-info">
@@ -280,7 +264,7 @@ class BumpBack extends Component {
                         </div>
                     </div>
 
-                    {/* <Difficulty changeDifficulty={this.changeDifficulty}/> */}
+                    <Difficulty changeDifficulty={this.changeDifficulty}/>
                 </div>
                 
                 <div className="game-menu">
