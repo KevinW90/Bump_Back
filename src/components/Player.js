@@ -6,7 +6,7 @@ const Player = (props) => {
         height: 30,
         background: props.bg,
         borderRadius: 50,
-        opacity: .9
+        opacity: .8
     }
 
     return (

@@ -7,6 +7,7 @@ import '../css/Block.css';
 import Die from './Die';
 import Button from './Button';
 import Player from './Player';
+import Difficulty from './Difficulty';
 
 
 class BumpBack extends Component {
@@ -18,7 +19,8 @@ class BumpBack extends Component {
             die1: 0,
             die2: 0,
             active_player: 0,
-            who_rolled: null
+            who_rolled: null,
+            difficulty: 'E'
         }
 
         
@@ -33,28 +35,22 @@ class BumpBack extends Component {
 
         this.DiceRoll = this.DiceRoll.bind(this);
         this.Bump = this.Bump.bind(this);
+        this.changeDifficulty = this.changeDifficulty.bind(this);
+        this.addPlayers = this.addPlayers.bind(this);
     }
 
     player_list = [
-        {
-            name: "kevin",
-            pos: "start",
-            color: "orange",
-            turn: 0
-        },
-        {
-            name: "bob",
-            pos: "start",
-            color: "green",
-            turn: 0
-        },
-        {
-            name: "stuart",
-            pos: "start",
-            color: "blue",
-            turn: 0
-        }
-    ]
+            {
+                name: "p1",
+                pos: "start",
+                color: "red"
+            },
+            {
+                name: 'p2',
+                pos: 'start',
+                color: 'blue'
+            }
+    ];
 
     DiceRoll = () => {
         //get dice roll
@@ -150,8 +146,6 @@ class BumpBack extends Component {
             active_player: newActivePlayer,
             who_rolled: this.state.active_player
         })
-
-        console.log(this.player_list);
     }
 
     Bump = (player) => {
@@ -164,6 +158,92 @@ class BumpBack extends Component {
                     this.Bump(this.player_list[i]) //check the bumped player's position for another bump
                 }
             }
+        }
+    }
+
+    changeDifficulty = (diff) => {
+        switch (diff) {
+            case 'e': //easy
+                //one computer player
+                this.addPlayers(1); 
+                this.setState({
+                    difficulty: 'E'
+                })
+                break;
+            case 'm': //medium
+                //two computer players
+                this.addPlayers(2);
+                this.setState({
+                    difficulty: 'M'
+                }) 
+                break;
+            case 'h': //hard
+                //three computer players
+                this.addPlayers(3);
+                this.setState({
+                    difficulty: 'H'
+                })
+        }
+    }
+
+    addPlayers = (num) => {
+        switch (num) {
+            case 1:
+                this.player_list = [
+                    {
+                        name: "p1",
+                        pos: "start",
+                        color: "red"
+                    },
+                    {
+                        name: 'p2',
+                        pos: 'start',
+                        color: 'blue'
+                    }
+                ]
+                break;
+            case 2:
+                this.player_list = [
+                    {
+                        name: "p1",
+                        pos: "start",
+                        color: "red"
+                    },
+                    {
+                        name: 'p2',
+                        pos: 'start',
+                        color: 'blue'
+                    },
+                    {
+                        name: 'p3',
+                        pos: 'start',
+                        color: 'green'
+                    }
+                ]
+                break;
+            case 3:
+                this.player_list = [
+                    {
+                        name: "p1",
+                        pos: "start",
+                        color: "red"
+                    },
+                    {
+                        name: 'p2',
+                        pos: 'start',
+                        color: 'blue'
+                    },
+                    {
+                        name: 'p3',
+                        pos: 'start',
+                        color: 'green'
+                    },
+                    {
+                        name: 'p4',
+                        pos: 'start',
+                        color: 'yellow'
+                    }
+                ]
         }
     }
 
@@ -186,24 +266,28 @@ class BumpBack extends Component {
         
         return (
             <div id="bump-back">
-                <div className="playback">
-                    {this.state.who_rolled !== null ? <div className="who-rolled"
-                                                           style={{color: this.player_list[this.state.who_rolled].color}}>
-                                                         {this.player_list[this.state.who_rolled].name}
-                                                      </div> 
-                                                    : 
-                                                      <div></div>}
-                    <div className="dice">
-                        <Die dotCnt={this.state.die1} />
-                        <Die dotCnt={this.state.die2} />
+                <div className="game-info">
+                    <div className="playback">
+                        {this.state.who_rolled !== null ? <div className="who-rolled"
+                                                            style={{color: this.player_list[this.state.who_rolled].color}}>
+                                                            {this.player_list[this.state.who_rolled].name}
+                                                        </div> 
+                                                        : 
+                                                        <div></div>}
+                        <div className="dice">
+                            <Die dotCnt={this.state.die1} />
+                            <Die dotCnt={this.state.die2} />
+                        </div>
                     </div>
+
+                    {/* <Difficulty changeDifficulty={this.changeDifficulty}/> */}
                 </div>
                 
                 <div className="game-menu">
-                    <div className="active-player">turn: &nbsp; <span style={{color: this.player_list[this.state.active_player].color}}>
+                    {/* <div className="active-player">turn: &nbsp; <span style={{color: this.player_list[this.state.active_player].color}}>
                                                              {this.player_list[this.state.active_player].name}
                                                          </span>
-                    </div>
+                    </div> */}
                     <Button role="roll" clickHandler={this.DiceRoll} bg={this.player_list[this.state.active_player].color}/>
                 </div>
                 <div className="strip">

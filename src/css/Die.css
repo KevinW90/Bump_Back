@@ -49,7 +49,7 @@
 .dice {
     /* border: 1px solid blue; */
     display: grid;
-    /* gap: 0px; */
+    /* gap: 2px; */
     grid-template: 1fr / 1fr 1fr;
 
     /* border: 1px solid yellow; */

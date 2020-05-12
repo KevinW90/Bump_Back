@@ -12,8 +12,17 @@
     /* border: 1px solid green; */
 }
 
-.playback {
+.game-info {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    display: grid;
+    grid-template: 1fr / 1fr 1fr 1fr;
+}
+
+.playback {
     top: 10px;
     left: 10px;
 
@@ -41,7 +50,7 @@
 
     display: grid;
     gap: 10px;
-    grid-template: repeat(2, 1fr) / 1fr;
+    grid-template: repeat(1, 1fr) / 1fr;
 
     font-size: 1.3rem;
     font-variant: small-caps;
