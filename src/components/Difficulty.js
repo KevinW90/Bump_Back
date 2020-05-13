@@ -7,15 +7,15 @@ const Difficulty = (props) => {
     return (
         <div className="difficulty">
             <div className="heading">
-                difficulty
+                # players
             </div>
             <div className="setting-wrapper">
                 <div className="setting" 
-                     onClick={() => changeDifficulty('E')}>E</div>
+                     onClick={() => changeDifficulty('E')}>2</div>
                 <div className="setting" 
-                     onClick={() => changeDifficulty('M')}>M</div>
+                     onClick={() => changeDifficulty('M')}>3</div>
                 <div className="setting" 
-                     onClick={() => changeDifficulty('H')}>H</div>
+                     onClick={() => changeDifficulty('H')}>4</div>
             </div>
         </div>
     );

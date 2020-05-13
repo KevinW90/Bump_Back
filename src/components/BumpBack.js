@@ -81,7 +81,6 @@ class BumpBack extends Component {
                 console.log(_die1 + ' ' + _die2)
                 this.player_list[this.state.active_player].pos = total;
                 console.log(this.player_list);
-                moved = true;
                 // this.setState({
                 //     game_over: true
                 // })
@@ -96,10 +95,8 @@ class BumpBack extends Component {
                 this.player_list[this.state.active_player].pos = prev;
                 moved = true;
             } else if (_die1 === _die2) { //if doubles
-                console.log('doubles')
                 //snake eyes moves 3
                 if (total === 2) {
-                    console.log('snake eyes')
                     //if new pos is higher than 12, no  move
                     if (pos + 3 <= 12) {
                         this.player_list[this.state.active_player].pos += 3;
