@@ -172,36 +172,25 @@ class BumpBack extends Component {
         })
 
         switch (diff) {
-            case 'E':
-                this.player_list = [
-                    {
-                        name: "red",
-                        pos: "start",
-                        color: "red"
-                    },
-                    {
-                        name: 'blue',
-                        pos: 'start',
-                        color: 'blue'
-                    }
-                ]
-                break;
             case 'M':
                 this.player_list = [
                     {
                         name: "red",
                         pos: "start",
-                        color: "red"
+                        color: "red",
+                        type: "H"
                     },
                     {
                         name: 'blue',
                         pos: 'start',
-                        color: 'blue'
+                        color: 'blue',
+                        type: "C"
                     },
                     {
                         name: 'green',
                         pos: 'start',
-                        color: 'green'
+                        color: 'green',
+                        type: "C"
                     }
                 ]
                 break;
@@ -210,22 +199,41 @@ class BumpBack extends Component {
                     {
                         name: "red",
                         pos: "start",
-                        color: "red"
+                        color: "red",
+                        type: "H"
                     },
                     {
                         name: 'blue',
                         pos: 'start',
-                        color: 'blue'
+                        color: 'blue',
+                        type: "C"
                     },
                     {
                         name: 'green',
                         pos: 'start',
-                        color: 'green'
+                        color: 'green',
+                        type: "C"
                     },
                     {
                         name: 'yellow',
                         pos: 'start',
-                        color: '#cccc00'
+                        color: '#cccc00',
+                        type: "C"
+                    }
+                ]
+            default:
+                this.player_list = [
+                    {
+                        name: "red",
+                        pos: "start",
+                        color: "red",
+                        type: "H"
+                    },
+                    {
+                        name: 'blue',
+                        pos: 'start',
+                        color: 'blue',
+                        type: "C"
                     }
                 ]
         }
