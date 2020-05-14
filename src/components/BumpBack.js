@@ -31,24 +31,26 @@ class BumpBack extends Component {
         this.Bump = this.Bump.bind(this);
         this.changeDifficulty = this.changeDifficulty.bind(this);
         this.RandomStartPlayer = this.RandomStartPlayer.bind(this);
+        this.AIclick = this.AIclick.bind(this);
     }
 
     player_list = [
             {
                 name: "red",
                 pos: "start",
-                color: "red"
+                color: "red",
+                type: "H"
             },
             {
                 name: 'blue',
                 pos: 'start',
-                color: 'blue'
+                color: 'blue',
+                type: "C"
             }
     ];
 
     RNG = (min,max) => {
         let n = Math.floor(Math.random() * (max - min + 1)) + min;
-        console.log(n);
         return n;
     }
 
@@ -221,6 +223,7 @@ class BumpBack extends Component {
                         type: "C"
                     }
                 ]
+                break;
             default:
                 this.player_list = [
                     {
@@ -248,8 +251,22 @@ class BumpBack extends Component {
         }
     }
 
-    componentWillMount = () => {
+    AIclick = () => {
+        if (this.player_list[this.state.active_player].type === "C") {
+            console.log('click roll button')
+            this.DiceRoll();
+        } else {
+            console.log('hi')
+        }  
+    }
+
+    componentDidMount = () => {
         this.RandomStartPlayer();
+        this.AIclick();
+    }
+
+    componentDidUpdate = () => {
+        this.AIclick();
     }
 
     render() {
