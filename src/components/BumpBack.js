@@ -254,14 +254,17 @@ class BumpBack extends Component {
     AIclick = () => {
         if (this.player_list[this.state.active_player].type === "C") {
             console.log('click roll button')
-            this.DiceRoll();
+            setTimeout(this.DiceRoll, 3000);
         } else {
             console.log('hi')
         }  
     }
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         this.RandomStartPlayer();
+    }
+    
+    componentDidMount = () => {
         this.AIclick();
     }
 
